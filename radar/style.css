@@ -1,0 +1,121 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+body {
+    background: #000;
+}
+#radar {
+    width: 640px;
+    height: 640px;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    overflow: hidden;
+}
+#radar > .line,
+#radar > .cycle,
+#beam {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+.line {
+    width: 100%;
+    height: 1px;
+    background: #fff;
+}
+.line-1 {
+    transform: translate(-50%, -50%) rotate(0deg);
+}
+.line-2 {
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+.line-3 {
+    transform: translate(-50%, -50%) rotate(90deg);
+}
+.line-4 {
+    transform: translate(-50%, -50%) rotate(135deg);
+}
+.cycle {
+    border: 1px solid #fff;
+    border-radius: 50%;
+}
+.cycle-1 {
+    width: 128px;
+    height: 128px;
+    transform-origin: center;
+    transform: translate(-50%, -50%);
+}
+.cycle-2 {
+    width: 256px;
+    height: 256px;
+    transform-origin: center;
+    transform: translate(-50%, -50%);
+}
+.cycle-3 {
+    width: 384px;
+    height: 384px;
+    transform-origin: center;
+    transform: translate(-50%, -50%);
+}
+.cycle-4 {
+    width: 512px;
+    height: 512px;
+    transform-origin: center;
+    transform: translate(-50%, -50%);
+}
+#beam {
+    transform-origin: 0 0;
+    background-image: linear-gradient(180deg, transparent, #00ff00);
+    width: 50%;
+    height: 50%;
+    animation: rotation 3s linear infinite;
+}
+.target {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background: #00ff00;
+    filter: blur(5px);
+    border-radius: 50%;
+    animation: fading 3s ease-in-out infinite;
+}
+.target-1 {
+    top: 50%;
+    left: 25%;
+}
+.target-2 {
+    top: 20%;
+    left: 75%;
+}
+.target-3 {
+    top: 75%;
+    left: 25%;
+}
+.target-4 {
+    top: 40%;
+    left: 65%;
+}
+@keyframes rotation {
+    from {
+        transform: rotate(0);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+@keyframes fading {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
