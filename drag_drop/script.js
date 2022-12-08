@@ -38,6 +38,7 @@ const bindEventDragDrop = (target, outer) => {
 
 const bindEventCreateElement = (target, outer) => {
     function clickHandler(e) {
+        e.preventDefault();
         const posPointerX = e.clientX;
         const posPointerY = e.clientY;
         const element = createElement(outer);
@@ -45,7 +46,7 @@ const bindEventCreateElement = (target, outer) => {
         element.style.left = `${posPointerX - outer.offsetLeft}px`;
         outer.appendChild(element);
     }
-    target.addEventListener('click', clickHandler);
+    target.addEventListener('dblclick', clickHandler, false);
 };
 
 const txt_0 = document.getElementById('txt_0');
