@@ -1,0 +1,12 @@
+{
+  "name": "Fake string",
+  "version": "1.0.1",
+  "description": "Generate a dummy string",
+  "manifest_version": 3,
+  "author": "Trinh Tran Phuong Nam",
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "Generate string"
+  }
+}
+
