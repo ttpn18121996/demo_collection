@@ -14,12 +14,13 @@ const FakeString = () => {
     const usrnHashed = name[0] + name[1] + usrnLen + name[name.length - 1];
     const pin = '6626';
     const repin = '9299';
-    result.append('hash-12: N%s@m' + pin, appNameHashed, document.createElement('br'));
-    result.append('re-hash-12: N%s@m' + repin, appNameHashed, document.createElement('br'));
+    result.innerHTML = '';
+    result.append(`hash-12: N${appNameHashed}@m${pin}`, document.createElement('br'));
+    result.append(`re-hash-12: N${appNameHashed}@m${repin}`, document.createElement('br'));
 
     if (appName.length % 2 === 0) {
-      result.append(`hash-14: N@m#${appNameHashed}#` + pin, document.createElement('br'));
-      result.append(`re-hash-14: N@m#${appNameHashed}#` + repin, document.createElement('br'));
+      result.append(`hash-14: N@m#${appNameHashed}#${pin}`, document.createElement('br'));
+      result.append(`re-hash-14: N@m#${appNameHashed}#${repin}`, document.createElement('br'));
 
       result.append(`hash-18: ${appNameHashed}${usrnHashed}$N@m${pin}`, document.createElement('br'));
       result.append(`re-hash-18: ${appNameHashed}${usrnHashed}$N@m$9299`, document.createElement('br'));
