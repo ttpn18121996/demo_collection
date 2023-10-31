@@ -25,7 +25,7 @@ const FakeString = () => {
       result.append(`hash-18: ${appNameHashed}${usrnHashed}$N@m${pin}`, document.createElement('br'));
       result.append(`re-hash-18: ${appNameHashed}${usrnHashed}$N@m$9299`, document.createElement('br'));
     } else {
-      result.append(`hash-14: ${pin}#${appNameHashed}}#N@m`, document.createElement('br'));
+      result.append(`hash-14: ${pin}#${appNameHashed}#N@m`, document.createElement('br'));
       result.append(`re-hash-14: ${repin}#${appNameHashed}#N@m`, document.createElement('br'));
 
       result.append(`hash-18: ${appNameHashed}${usrnHashed}$${pin}N@m`, document.createElement('br'));
