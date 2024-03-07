@@ -1,0 +1,70 @@
+.typing {
+    position: relative;
+    width: 40px;
+}
+.dot {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: #d1d5db;
+    border-radius: 50%;
+}
+
+.dot-1 {
+    left: 0;
+    top: 50%;
+    animation: scale1 1s linear infinite;
+}
+.dot-2 {
+    left: 50%;
+    top: 50%;
+    animation: scale2 1s linear infinite;
+}
+.dot-3 {
+    right: 0;
+    top: 50%;
+    animation: scale3 1s linear infinite;
+}
+
+@keyframes scale1 {
+    0% {
+        transform: translateY(-50%) scale(1.5, 1.5);
+        background: #6b7280;
+    }
+    30% {
+        transform: translateY(-50%) scale(1, 1);
+    }
+    100% {
+        transform: translateY(-50%) scale(1, 1);
+    }
+}
+@keyframes scale2 {
+    0% {
+        transform: translate(-50%, -50%) scale(1, 1);
+    }
+    30% {
+        transform: translate(-50%, -50%) scale(1.5, 1.5);
+        background: #6b7280;
+    }
+    60% {
+        transform: translate(-50%, -50%) scale(1, 1);
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1, 1);
+    }
+}
+@keyframes scale3 {
+    0% {
+        transform: translateY(-50%) scale(1, 1);
+    }
+    60% {
+        transform: translateY(-50%) scale(1.5, 1.5);
+        background: #6b7280;
+    }
+    90% {
+        transform: translateY(-50%) scale(1, 1);
+    }
+    100% {
+        transform: translateY(-50%) scale(1, 1);
+    }
+}

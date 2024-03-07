@@ -15,5 +15,21 @@
                 <a class="item" href="./drag_drop/index.html">Drag drop</a>
             </div>
         </div>
+        <script type="text/javascript">
+            function objSet(obj, key, value) {
+                const keys = key.split('.')
+                for (let i = 0; i < keys.length; i++) {
+                    const k = keys.shift()
+                    if (!obj?.[k] || typeof obj[k] !== 'object') {
+                        obj[k] = {}
+                    }
+                    obj = obj[k]
+                }
+                obj[keys.shift()] = value
+            }
+            const _obj = {user: { account: { name: 'Nam' } }}
+            objSet(_obj, 'user.account.id', 100)
+            console.log(_obj)
+        </script>
     </body>
 </html>
