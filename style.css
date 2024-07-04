@@ -32,7 +32,7 @@ html {
     gap: 2;
     max-width: 64rem;
     height: 100vh;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 }
 .item {
@@ -46,4 +46,8 @@ html {
     color: #f5f5f5;
     text-decoration: none;
     font-size: 1.25rem;
+}
+
+.item + .item {
+    margin-left: 8px;
 }

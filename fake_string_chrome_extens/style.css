@@ -44,12 +44,12 @@ a {
   font-size: 1rem;
 }
 .btn > .first {
-  background: #f59e0b;
-  border-radius: .25rem;
-  padding: .125rem .25rem;
+  color: #fff;
 }
 .btn > .last {
-  color: #fff;
+  background: #faa100;
+  border-radius: .25rem;
+  padding: .125rem .25rem;
 }
 #result {
   padding: .5rem 0;
