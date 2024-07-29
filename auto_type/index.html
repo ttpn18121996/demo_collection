@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coding</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="terminal">
+        <pre id="code-php"></pre>
+    </div>
+
+    <div class="screen">
+        <div class="text-center">
+            <h1 id="title"></h1>
+            <h2 id="content"></h2>
+        </div>
+    </div>
+
+    <script src="./code-content.js"></script>
+    <script src="./script.js"></script>
+    <script>
+        const params = new URL(window.location.href).searchParams;
+        const lang = params.get('lang');
+        switch (lang) {
+            case 'js':
+                typing(codeJs);
+                break;
+            case 'cpp':
+                typing(codeCpp);
+                break;
+            default:
+                typing(codePhp);
+        }
+    </script>
+</body>
+</html>

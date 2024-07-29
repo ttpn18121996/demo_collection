@@ -8,9 +8,8 @@
         <link rel="stylesheet" href="./style.css" />
     </head>
     <body>
-        <div class="container h-screen">
-            <h1 id="hello" class="text-center"></h1>
-            <div class="flex justify-center h-full">
+        <div class="container h-screen pt-5">
+            <div class="flex justify-center mb-5">
                 <div class="items flex">
                     <a class="item" href="./clock/index.html">Đồng hồ</a>
                     <a class="item" href="./radar/index.html">Radar</a>
@@ -20,23 +19,15 @@
                     <a class="item" href="./loading/processing.html">Processing</a>
                     <a class="item" href="./loading/typing.html">Typing</a>
                     <a class="item" href="./generate_logo/index.html">Logo</a>
+                    <a class="item" href="./auto_type/index.html">Auto type</a>
                 </div>
             </div>
+            <h1 id="title" class="text-center"></h1>
+            <h2 id="content" class="text-center"></h2>
         </div>
+        <script src="auto_type/script.js"></script>
         <script type="text/javascript">
-            const hello = document.getElementById('hello');
-            const greeting = 'Hello mother fucker!!!';
-            let rs = '|';
-            let i = 0;
-            const interval = setInterval(() => {
-                rs = rs.replace(/\|$/, '') + greeting[i] + '\|';
-                hello.innerText = rs;
-                i++;
-                if (i === greeting.length) {
-                    hello.innerText = hello.innerText.replace(/\|$/, '');
-                    clearInterval(interval);
-                }
-            }, 100);
+            showContent('Hello mother fucker!!!', 'What the fuck are you looking for?');
         </script>
     </body>
 </html>

@@ -33,26 +33,35 @@ html {
 .items-center {
     align-items: center !important;
 }
+.pt-5 {
+    padding-top: 1.25rem;
+}
+.mb-5 {
+    margin-bottom: 1.25rem;
+}
 .items {
     width: 100%;
-    gap: 2;
     max-width: 64rem;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
+    flex-wrap: wrap;
 }
 .item {
     padding: 2rem;
     border: 1px solid #a3a3fd;
-    background-color: #a3a3fd;
     max-width: 16rem;
     width: 100%;
-    border-radius: 0.25rem;
     text-align: center;
-    color: #f5f5f5;
+    color: #a3a3fd;
     text-decoration: none;
     font-size: 1.25rem;
+    margin-bottom: 1rem;
 }
-.item + .item {
+.item:hover {
+    background-color: #a3a3fd;
+    color: #f5f5f5;
+}
+.space-x-2 * + * {
     margin-left: 8px;
 }
 .text-center {
