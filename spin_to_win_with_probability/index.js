@@ -15,14 +15,34 @@ function spinToWinWithProbability(data) {
 
 // Tổng xác suất phải bằng 1 (0.3 + 0.5 + 0.2 = 1);
 const data = {
-  'Món quà A': 0.01,
-  'Giảm giá 10%': 0.06,
-  'Mã giảm giá XYZ': 0.03,
-  'Chúc bạn may mắn lần sau': 0.6,
-  'An ủi': 0.3,
+  'Trúng 10 tỷ': 0.000001,
+  'Miễn phí chơi gái 1 năm': 0.000002,
+  'Miễn phí chơi gái 1 tháng': 0.000007,
+  'Miễn phí xài bao cao su 1 năm': 0.00002,
+  'Giảm giá 50% mua bao cao su': 0.00007,
+  'Giảm giá 10% mua bao cao su': 0.0009,
+  'Chúc bạn may mắn lần sau': 0.999,
 };
 
-for (let i = 0; i < 20; i++) {
-  const randomPrize = spinToWinWithProbability(data);
-  console.log(randomPrize);
+function checkNumberSpins(prize) {
+  let count = 1;
+  while (true) {
+    const randomPrize = spinToWinWithProbability(data);
+
+    if (randomPrize === prize) {
+      console.log(`${prize}: ${count}`);
+      break;
+    }
+
+    count++;
+  }
 }
+
+function autoSpin(times = 1) {
+  for (let i = 0; i < times; i++) {
+    const randomPrize = spinToWinWithProbability(data);
+    console.log(randomPrize);
+  }
+}
+
+checkNumberSpins('Chúc bạn may mắn lần sau');

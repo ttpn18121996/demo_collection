@@ -1,0 +1,22 @@
+*, *::before, *::after {
+    padding: 0;
+    margin: 0;
+}
+.text-center {
+    text-align: center;
+}
+.terminal {
+    width: 100%;
+    background-color: #000;
+}
+pre {
+    color: #00ff00;
+    line-height: 1.25rem;
+}
+.screen {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}

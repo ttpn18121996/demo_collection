@@ -8,32 +8,26 @@
         <link rel="stylesheet" href="./style.css" />
     </head>
     <body>
-        <div class="container flex justify-center">
-            <div class="items flex">
-                <a class="item" href="./clock/index.html">Đồng hồ</a>
-                <a class="item" href="./radar/index.html">Radar</a>
-                <a class="item" href="./drag_drop/index.html">Drag drop</a>
-                <a class="item" href="./sort_menu/index.html">Sort menu</a>
-                <a class="item" href="./loading/index.html">Loading</a>
-                <a class="item" href="./loading/processing.html">Processing</a>
-                <a class="item" href="./loading/typing.html">Typing</a>
+        <div class="container h-screen pt-5">
+            <div class="flex justify-center mb-5">
+                <div class="items flex">
+                    <a class="item" href="./clock/index.html">Đồng hồ</a>
+                    <a class="item" href="./radar/index.html">Radar</a>
+                    <a class="item" href="./drag_drop/index.html">Drag drop</a>
+                    <a class="item" href="./sort_menu/index.html">Sort menu</a>
+                    <a class="item" href="./loading/index.html">Loading</a>
+                    <a class="item" href="./loading/processing.html">Processing</a>
+                    <a class="item" href="./loading/typing.html">Typing</a>
+                    <a class="item" href="./generate_logo/index.html">Logo</a>
+                    <a class="item" href="./auto_type/index.html">Auto type</a>
+                </div>
             </div>
+            <h1 id="title" class="text-center"></h1>
+            <h2 id="content" class="text-center"></h2>
         </div>
+        <script src="auto_type/script.js"></script>
         <script type="text/javascript">
-            function objSet(obj, key, value) {
-                const keys = key.split('.')
-                for (let i = 0; i < keys.length; i++) {
-                    const k = keys.shift()
-                    if (!obj?.[k] || typeof obj[k] !== 'object') {
-                        obj[k] = {}
-                    }
-                    obj = obj[k]
-                }
-                obj[keys.shift()] = value
-            }
-            const _obj = {user: { account: { name: 'Nam' } }}
-            objSet(_obj, 'user.account.id', 100)
-            console.log(_obj)
+            showContent('Hello mother fucker!!!', 'What the fuck are you looking for?');
         </script>
     </body>
 </html>

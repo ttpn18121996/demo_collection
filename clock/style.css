@@ -37,15 +37,15 @@
     border-radius: 50%;
 }
 #hour {
-    width: 4px;
+    width: 6px;
     height: 175px;
 }
 #minute {
-    width: 2px;
+    width: 4px;
     height: 250px;
 }
 #seconds {
-    width: 1px;
+    width: 2px;
     height: 275px;
     background-color: #fa1212;
 }
