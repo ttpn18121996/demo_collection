@@ -25,9 +25,25 @@
             <h1 id="title" class="text-center"></h1>
             <h2 id="content" class="text-center"></h2>
         </div>
+
+        <div id="touch-me" style="position: absolute;left:0; top:0;">Touch me</div>
+        <div id="watch">1</div>
         <script src="auto_type/script.js"></script>
         <script type="text/javascript">
             showContent('Hello mother fucker!!!', 'What the fuck are you looking for?');
+        </script>
+        <script>
+            const tm = document.getElementById('touch-me');
+            const w = document.getElementById('watch');
+            tm.addEventListener('touchstart', function () {
+                w.innerText = 'Start';
+            });
+            tm.addEventListener('touchmove', function (e) {
+                w.innerText = 'Move';
+            })
+            tm.addEventListener('touchend', function (e) {
+                w.innerText = 'End';
+            })
         </script>
     </body>
 </html>
