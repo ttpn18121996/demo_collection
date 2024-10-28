@@ -7,6 +7,7 @@
 </head>
 <body>
     <h1>Layout</h1>
+    <?= $this->include('partials.navigation') ?>
     <?= $this->render('content') ?>
 </body>
 </html>

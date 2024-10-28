@@ -132,10 +132,10 @@ class View
 
         $viewStruct = $this->xmlToArray($xml);
 
-        if (($layoutName = Arr::get($viewStruct, 'layout.@attributes.name'))) {
+        if (($layoutName = Arr::get($viewStruct, 'app-layout.@attributes.name'))) {
             $this->layout = $layoutName;
 
-            if ($children = Arr::get($viewStruct, 'layout.section')) {
+            if ($children = Arr::get($viewStruct, 'app-layout.app-section')) {
                 foreach ($children as $key => $section) {
                     if (is_numeric($key)) {
                         if ($sectionName = Arr::get($section, '@attributes.name')) {
