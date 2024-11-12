@@ -25,7 +25,7 @@ const FakeString = () => {
     const appNameHashed = appName[0] + appName[1] + appLen + appName[appName.length - 1];
     const usrnHashed = name[0] + name[1] + usrnLen + name[name.length - 1];
 
-    result.append('hash-12: N%s@m' + txtKey, appNameHashed, document.createElement('br'));
+    result.append(`hash-12: N${appNameHashed}@m` + txtKey, document.createElement('br'));
 
     if (appName.length % 2 === 0) {
       result.append(`hash-14: N@m#${appNameHashed}#` + txtKey, document.createElement('br'));
