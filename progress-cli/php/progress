@@ -7,5 +7,5 @@ $progress = new ProgressBar(100, 100);
 
 for ($i = 1; $i <= $progress->getTotal(); $i++) {
     $progress->showProgress($i);
-    usleep(1000000);
+    usleep(100000);
 }

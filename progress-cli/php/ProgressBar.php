@@ -64,7 +64,7 @@ class ProgressBar
         flush();
 
         if ($current == $this->total) {
-            echo PHP_EOL;
+            echo PHP_EOL.'Done.'.PHP_EOL;
         }
     }
 }
