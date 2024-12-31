@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <input type="number" id="year">
+    <input type="number" id="month">
+    <button type="button" id="btn_submit">Submit</button>
+    <div id="hello"></div>
+
+    <script src="./script.js"></script>
+    <script>
+        Calendar.setup({
+            targetId: 'hello',
+            locale: 'vi',
+            displayShortDayOfWeek: false,
+            onDoubleClickToday: (_this) => {
+                alert(_this.now.toString());
+            },
+            onDoubleClickDay: (_this, d) => {
+                alert(d);
+            },
+        }).start();
+    </script>
+</body>
+</html>
