@@ -10,6 +10,8 @@
     <input type="number" id="year">
     <input type="number" id="month">
     <button type="button" id="btn_submit">Submit</button>
+    <button type="button" id="btn_pre">Pre</button>
+    <button type="button" id="btn_next">Next</button>
     <div id="hello"></div>
 
     <script src="./script.js"></script>
@@ -18,12 +20,23 @@
             targetId: 'hello',
             locale: 'vi',
             displayShortDayOfWeek: false,
-            onDoubleClickToday: (_this) => {
+            onDoubleClickToday: (e, _this) => {
                 alert(_this.now.toString());
             },
-            onDoubleClickDay: (_this, d) => {
+            onDoubleClickDay: (e, _this, d) => {
                 alert(d);
             },
+            afterRender: (_this) => {
+                document.getElementById('btn_submit').addEventListener('click', () => {
+                    _this.generateNoOfDays();
+                });
+                document.getElementById('btn_pre').addEventListener('click', () => {
+                    _this.goToPrevMonth();
+                });
+                document.getElementById('btn_next').addEventListener('click', () => {
+                    _this.goToNextMonth();
+                });
+            }
         }).start();
     </script>
 </body>

@@ -4,12 +4,6 @@
     box-sizing: border-box;
 }
 
-#calendar {
-    width: 100%;
-    max-width: 768px;
-    margin: 0 auto;
-}
-
 table {
     width: 100%;
     border-collapse: collapse;
@@ -36,9 +30,17 @@ td {
     left: .5rem;
     padding: .25rem;
     border-radius: 100%;
+    width: 32px;
+    height: 32px;
+    text-align: center;
+    line-height: 1.5;
 }
 
 .day-value.active {
     background-color: #ff0000;
     color: #fff;
+}
+
+.blank-day {
+    background-color: #f1f1f1;
 }

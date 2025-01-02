@@ -30,6 +30,7 @@
           shortDayOfWeeks: ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'],
         },
       },
+      afterRender: _this => {},
     },
   };
   _this.now = new Date();
@@ -52,7 +53,9 @@
     _this.yearInput.value = _this.now.getFullYear();
     _this.monthInput.value = _this.now.getMonth() + 1;
 
-    _this.generateDataWeek();
+    _this.generateNoOfDays();
+
+    _this.configs.afterRender(_this);
   };
 
   _this.generateTable = function () {
@@ -74,78 +77,111 @@
     table.appendChild(thead);
     table.appendChild(tbody);
 
+    table.style.maxWidth = '768px';
+    table.style.marginLeft = 'auto';
+    table.style.marginRight = 'auto';
+
     _this.target.appendChild(table);
   };
 
-  _this.generateDataDay = function (startDay = 1) {
-    const firstDayOfWeek = new Date(_this.yearInput.value, _this.monthInput.value - 1, startDay);
-    const lastDayOfMonth = new Date(_this.yearInput.value, _this.monthInput.value, 0).getDate();
-    const dayOfWeek = firstDayOfWeek.getDay();
-    const result = [];
-    let current = startDay;
+  _this.generateNoOfDays = function () {
+    const { blankDays, days } = _this.getNoOfDays();
 
-    for (let i = 0; i < 7; i++) {
-      if (i >= dayOfWeek && lastDayOfMonth >= current) {
-        result.push(current);
-        current++;
-      } else {
-        result.push(null);
+    let noDayOfWeekFilled = 0;
+    let week = 0;
+
+    _this.bodyCalendar.innerHTML = '';
+
+    while (days.length) {
+      const tr = document.createElement('tr');
+
+      if (!week) {
+        for (let i = 0; i < blankDays.length; i++) {
+          const td = document.createElement('td');
+          td.classList.add('blank-day');
+          tr.appendChild(td);
+          noDayOfWeekFilled++;
+        }
       }
+
+      while (noDayOfWeekFilled < 7) {
+        const td = document.createElement('td');
+        const day = days.shift();
+
+        if (!day) {
+          td.classList.add('blank-day');
+        } else {
+          td.innerHTML = `<span class="day-value${_this.isToday(day) ? ' active' : ''}">${day}</span>`;
+        }
+
+        if (_this.isToday(day)) {
+          td.addEventListener('dblclick', e => {
+            _this.configs.onDoubleClickToday(e, _this);
+          })
+        } else {
+          td.addEventListener('dblclick', e => {
+            _this.configs.onDoubleClickDay(e, _this, day);
+          })
+        }
+
+        tr.appendChild(td);
+        noDayOfWeekFilled++;
+      }
+
+      week++;
+      _this.bodyCalendar.appendChild(tr);
+
+      if (noDayOfWeekFilled >= 7) {
+        noDayOfWeekFilled = 0;
+      }
+    }
+  };
+
+  _this.getNoOfDays = function () {
+    const daysInMonth = new Date(_this.yearInput.value, _this.monthInput.value, 0).getDate();
+    const dayOfWeek = new Date(_this.yearInput.value, _this.monthInput.value - 1, 1).getDay();
+    
+    const blankDays = [];
+    for (let i = 1; i <= dayOfWeek; i++) {
+      blankDays.push(i);
+    }
+
+    const days = [];
+    for (let i = 1; i <= daysInMonth; i++) {
+      days.push(i);
     }
 
     return {
-      days: result,
-      dayOfWeekend: result[6],
-      lastDayOfMonth,
+      blankDays,
+      days,
     };
   };
 
-  _this.generateDataWeek = function () {
-    let dayOfWeekend = 0;
-
-    for (let i = 0; i < 5; i++) {
-      const dataDay = _this.generateDataDay(dayOfWeekend + 1);
-      const days = dataDay.days;
-      dayOfWeekend = dataDay.dayOfWeekend;
-
-      if (i === 4 && [1, 2].includes(dataDay.lastDayOfMonth - dayOfWeekend)) {
-        document.querySelectorAll('.day-value').forEach((element, index) => {
-          if (dataDay.lastDayOfMonth - index > dayOfWeekend) {
-            element.innerText = dayOfWeekend + index + 1;
-          }
-        });
-      }
-
-      if (dayOfWeekend > dataDay.lastDayOfMonth) {
-        break;
-      }
-
-      const week = document.createElement('tr');
-      week.classList.add('week');
-
-      for (const d of days) {
-        const day = document.createElement('td');
-        const isToday =
-          _this.yearInput.value == _this.now.getFullYear() &&
-          _this.monthInput.value == _this.now.getMonth() + 1 &&
-          d == _this.now.getDate();
-        day.innerHTML = `<span class="day-value${isToday ? ' active' : ''}">${d || ''}</span>`;
-
-        if (isToday && _this.configs.onDoubleClickToday) {
-          day.addEventListener('dblclick', function () {
-            _this.configs.onDoubleClickToday(_this);
-          }, false);
-        } else if (d && _this.configs.onDoubleClickDay) {
-          day.addEventListener('dblclick', function () {
-            _this.configs.onDoubleClickDay(_this, d);
-          }, false);
-        }
-
-        week.appendChild(day);
-      }
-
-      _this.bodyCalendar.appendChild(week);
+  _this.goToPrevMonth = function () {
+    if (_this.monthInput.value == 1) {
+      _this.monthInput.value = 12;
+      _this.yearInput.value--;
+    } else {
+      _this.monthInput.value--;
     }
+
+    _this.generateNoOfDays();
+  };
+
+  _this.goToNextMonth = function () {
+    if (_this.monthInput.value == 12) {
+      _this.monthInput.value = 1;
+      _this.yearInput.value++;
+    } else {
+      _this.monthInput.value++;
+    }
+
+    _this.generateNoOfDays();
+  };
+
+  _this.isToday = function (date) {
+    const d = new Date(_this.yearInput.value, _this.monthInput.value - 1, date);
+    return _this.now.toDateString() === d.toDateString();
   };
 
   _this.setTranslations = function (locale, data) {
