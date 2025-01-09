@@ -46,3 +46,4 @@ Collection.macro('toString', (_this) => {
 
 const collect = new Collection([{id: 1, name: 'Nam'}, {id: 2, name: 'Nguyet'}]);
 console.log(collect.call('toString')())
+console.log(collect.call('map')(item => item.name))

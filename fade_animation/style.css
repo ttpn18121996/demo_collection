@@ -1,0 +1,53 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+ul {
+    list-style: none;
+}
+
+.navigation {
+    height: 64px;
+    background-color: #000;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown-trigger {
+    outline: none;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    background-color: #faa100;
+}
+
+.dropdown-content {
+    display: none;
+    opacity: 0;
+    position: absolute;
+    top: 47px;
+    right: 0;
+    width: 300px;
+    background-color: #000;
+    transition: opacity .3s ease;
+}
+
+.dropdown-content.show {
+    opacity: 1;
+}
+
+.dropdown-item {
+    padding: 4px 8px;
+}
+
+.dropdown-item a {
+    color: #fff;
+}
