@@ -1,0 +1,112 @@
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #000;
+}
+
+.container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.atom {
+    position: relative;
+    width: 400px;
+    height: 400px;
+}
+
+.proton, .electron {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform-origin: center center;
+    border-radius: 100%;
+}
+
+.proton {
+    background-color: #fff;
+    width: 32px;
+    height: 32px;
+    transform: translate(-50%, -50%);
+}
+
+.electron {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #fff;
+    transform-style: preserve-3d;
+}
+
+.electron::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    transform-origin: center;
+    width: 8px;
+    height: 8px;
+    background-color: #fff;
+    border-radius: 100%;
+    transform-style: preserve-3d;
+}
+
+.electron-1 {
+    transform: translate(-50%, -50%) rotateX(80deg) rotateY(0deg) rotateZ(0deg);
+    animation: spin-1 3s linear infinite;
+}
+
+.electron-1::before {
+    transform: translateX(-50%) rotateX(-50deg);
+}
+
+.electron-2 {
+    transform: translate(-50%, -50%) rotateX(72deg) rotateY(-55deg) rotateZ(0deg);
+    animation: spin-2 3s linear infinite;
+}
+
+.electron-2::before {
+    transform: translateX(-50%) rotateX(63deg) rotateY(-45deg);
+}
+
+.electron-3 {
+    transform: translate(-50%, -50%) rotateX(72deg) rotateY(55deg) rotateZ(0deg);
+    animation: spin-3 3s linear infinite;
+}
+
+.electron-3::before {
+    transform: translateX(-50%) rotateX(63deg) rotateY(45deg);
+}
+
+@keyframes spin-1 {
+    from {
+        transform: translate(-50%, -50%) rotateX(80deg) rotateY(0deg) rotateZ(0deg);
+    }
+    to {
+        transform: translate(-50%, -50%) rotateX(80deg) rotateY(0deg) rotateZ(360deg);
+    }
+}
+
+@keyframes spin-2 {
+    from {
+        transform: translate(-50%, -50%) rotateX(72deg) rotateY(-55deg) rotateZ(0deg);
+    }
+    to {
+        transform: translate(-50%, -50%) rotateX(72deg) rotateY(-55deg) rotateZ(360deg);
+    }
+}
+
+@keyframes spin-3 {
+    from {
+        transform: translate(-50%, -50%) rotateX(72deg) rotateY(55deg) rotateZ(0deg);
+    }
+    to {
+        transform: translate(-50%, -50%) rotateX(72deg) rotateY(55deg) rotateZ(360deg);
+    }
+}
