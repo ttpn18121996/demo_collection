@@ -88,6 +88,29 @@
     animation: scale3 1s linear infinite;
 }
 
+.wave {
+    position: relative;
+    width: 64px;
+    height: 64px;
+}
+
+.wavelength {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 8px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: var(--gray-dark);
+    border-radius: 100%;
+    animation: wave-echo 2000ms ease-out infinite;
+}
+.wavelength + .wavelength {
+    animation: wave-echo 2000ms ease-out 1000ms infinite;
+}
+
 @keyframes spin {
     from {
         transform: rotate(0deg);
@@ -137,5 +160,18 @@
     }
     100% {
         transform: translateY(-50%) scale(1, 1);
+    }
+}
+
+@keyframes wave-echo {
+    from {
+        width: 8px;
+        height: 8px;
+        opacity: 1;
+    }
+    to {
+        width: 64px;
+        height: 64px;
+        opacity: 0;
     }
 }
