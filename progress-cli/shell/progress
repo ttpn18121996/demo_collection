@@ -1,0 +1,8 @@
+source ./progressbar.sh
+
+tasks_in_total=100
+
+for current_task in $(seq $tasks_in_total); do
+    show_progress $current_task $tasks_in_total 100
+    sleep 0.1
+done
