@@ -1,11 +1,19 @@
 #!/usr/bin/env php
 <?php
 
+require __DIR__.'/Command.php';
 require __DIR__.'/ProgressBar.php';
 
-$progress = new ProgressBar(100, 100);
+Command::defineShortKey('total', 't');
+Command::defineShortKey('delay', 'd');
+
+$command = new Command($argv, $argc);
+$total = $command->getOptions('total', 100);
+$delay = $command->getOptions('delay', 100);
+
+$progress = new ProgressBar($total, 100);
 
 for ($i = 1; $i <= $progress->getTotal(); $i++) {
     $progress->showProgress($i);
-    usleep(100000);
+    usleep($delay * 1000);
 }

@@ -6,7 +6,7 @@ BAR_CHAR_TODO="-"
 BAR_CHAR_END=">"
 START_TIME=0
 
-function show_progress {
+function show_progress() {
     current="$1"
     total="$2"
 

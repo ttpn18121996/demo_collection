@@ -1,3 +1,4 @@
+const ProgressBar = require('./Command');
 const ProgressBar = require('./ProgressBar');
 
 function sleep(timeout) {
@@ -12,5 +13,7 @@ async function run() {
     await sleep(100);
   }
 }
+
+const command = new Command(process.argv, process.argv.length);
 
 run();

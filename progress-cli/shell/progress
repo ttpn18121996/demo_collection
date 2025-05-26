@@ -1,8 +1,19 @@
+source ./command.sh
 source ./progressbar.sh
 
-tasks_in_total=100
+total=100
+delay=100
 
-for current_task in $(seq $tasks_in_total); do
-    show_progress $current_task $tasks_in_total 100
-    sleep 0.1
+get_options $@
+
+if [[ -z "$delay" || ! "$delay" =~ ^[0-9]+$ ]]; then
+    echo "The delay option must be a number"
+    exit 1
+fi
+
+delay_sec=$(awk "BEGIN {print $delay/1000}")
+
+for current_task in $(seq $total); do
+    show_progress $current_task $total 100
+    sleep "$delay_sec"
 done
