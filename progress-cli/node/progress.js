@@ -1,4 +1,4 @@
-const ProgressBar = require('./Command');
+const Command = require('./Command');
 const ProgressBar = require('./ProgressBar');
 
 function sleep(timeout) {
