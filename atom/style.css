@@ -8,11 +8,10 @@ body {
 }
 
 .container {
-    width: 100%;
-    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-top: 70px;
 }
 
 .atom {
@@ -21,7 +20,7 @@ body {
     height: 400px;
 }
 
-.proton, .electron {
+.proton {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -36,77 +35,73 @@ body {
     transform: translate(-50%, -50%);
 }
 
+.orbital {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform-style: preserve-3d;
+    width: 100%;
+    height: 100%;
+}
+
 .electron {
+    position: relative;
     width: 100%;
     height: 100%;
     border: 1px solid #fff;
+    border-radius: 100%;
     transform-style: preserve-3d;
+    animation: trail 1s infinite linear;
 }
 
 .electron::before {
     content: '';
     position: absolute;
-    top: -4px;
-    left: 50%;
-    transform: translateX(-50%);
-    transform-origin: center;
     width: 8px;
     height: 8px;
     background-color: #fff;
     border-radius: 100%;
     transform-style: preserve-3d;
-}
-
-.electron-1 {
-    transform: translate(-50%, -50%) rotateX(80deg) rotateY(0deg) rotateZ(0deg);
-    animation: spin-1 3s linear infinite;
+    animation: particle 1s infinite linear;
 }
 
 .electron-1::before {
-    transform: translateX(-50%) rotateX(-50deg);
-}
-
-.electron-2 {
-    transform: translate(-50%, -50%) rotateX(72deg) rotateY(-55deg) rotateZ(0deg);
-    animation: spin-2 3s linear infinite;
+    top: -5px; left: 50%;
 }
 
 .electron-2::before {
-    transform: translateX(-50%) rotateX(63deg) rotateY(-45deg);
-}
-
-.electron-3 {
-    transform: translate(-50%, -50%) rotateX(72deg) rotateY(55deg) rotateZ(0deg);
-    animation: spin-3 3s linear infinite;
+    top: 50%; left: -5px;
 }
 
 .electron-3::before {
-    transform: translateX(-50%) rotateX(63deg) rotateY(45deg);
+    bottom: 50%; left: -5px;
 }
 
-@keyframes spin-1 {
-    from {
-        transform: translate(-50%, -50%) rotateX(80deg) rotateY(0deg) rotateZ(0deg);
-    }
-    to {
-        transform: translate(-50%, -50%) rotateX(80deg) rotateY(0deg) rotateZ(360deg);
-    }
+.electron-4::before {
+    top: 50%; right: -5px;
 }
 
-@keyframes spin-2 {
-    from {
-        transform: translate(-50%, -50%) rotateX(72deg) rotateY(-55deg) rotateZ(0deg);
-    }
-    to {
-        transform: translate(-50%, -50%) rotateX(72deg) rotateY(-55deg) rotateZ(360deg);
-    }
+.orbital:nth-child(1) {
+    transform: translate(-50%, -50%) rotateX(78deg) rotateY(30deg);
 }
 
-@keyframes spin-3 {
-    from {
-        transform: translate(-50%, -50%) rotateX(72deg) rotateY(55deg) rotateZ(0deg);
-    }
-    to {
-        transform: translate(-50%, -50%) rotateX(72deg) rotateY(55deg) rotateZ(360deg);
-    }
+.orbital:nth-child(2) {
+    transform: translate(-50%, -50%) rotateX(60deg) rotateY(70deg);
+}
+
+.orbital:nth-child(3) {
+    transform: translate(-50%, -50%) rotateX(-70deg) rotateY(60deg);
+}
+
+.orbital:nth-child(4) {
+    transform: translate(-50%, -50%) rotateX(-80deg) rotateY(20deg);
+}
+
+@keyframes trail {
+    from { transform: rotateZ(0deg); }
+    to { transform: rotateZ(360deg); }
+}
+@keyframes particle {
+    from { transform: rotateX(90deg) rotateY(0deg); }
+    to { transform: rotateX(90deg) rotateY(-360deg); }
 }
