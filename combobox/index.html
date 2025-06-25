@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Combobox</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="combobox"></div>
+    </div>
+    <script src="./script.js"></script>
+    <script>
+        Combobox.useBody(({combobox, parent, close}) => {
+            const input = parent.querySelector('input');
+            for (let i = 0; i < 10; i++) {
+                const item = document.createElement('div');
+                item.innerText = `Item ${i+1}`;
+                item.addEventListener('click', e => {
+                    input.value = e.target.innerText;
+                    close();
+                });
+                combobox.appendChild(item);
+            }
+        }).create();
+    </script>
+</body>
+</html>
