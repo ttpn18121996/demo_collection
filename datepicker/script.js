@@ -8,73 +8,6 @@
   }
 })(typeof self !== 'undefined' ? self : this, function () {
   'use strict';
-
-  class DatePicker {
-    constructor(settings = {}) {
-      this.settings = {
-        displayFormat: 'YYYY-MM-DD',
-        target: '.date-picker',
-        name: 'date_of_birth',
-        ...settings,
-      };
-      this.calendar = null;
-    }
-
-    createInput() {
-      const input = document.createElement('input');
-      input.type = 'text';
-      input.name = this.settings.name;
-      input.classList.add('date-picker__input');
-      return input;
-    }
-
-    handleShowCalendar(datePicker) {
-      if (this.calendar) {
-        this.handleRemoveCalendar(datePicker);
-        return;
-      }
-
-      this.calendar = new Calendar().create(datePicker);
-      document.body.appendChild(this.calendar.element);
-
-      setTimeout(() => {
-        document.addEventListener('click', (e) => {
-          this.outsideClickHandler(datePicker, e);
-        });
-      });
-    }
-
-    handleRemoveCalendar(datePicker) {
-      if (this.calendar && this.calendar.getParentNode()) {
-        this.calendar.getParentNode().removeChild(this.calendar.element);
-        this.calendar = null;
-        document.removeEventListener('click', (e) => {
-          this.outsideClickHandler(datePicker, e);
-        });
-      }
-    }
-
-    outsideClickHandler(datePicker, e) {
-      if (this.calendar && !this.calendar.contains(e.target) && !datePicker.contains(e.target)) {
-        this.handleRemoveCalendar(datePicker);
-      }
-    }
-
-    load() {
-      const _datePickers = document.querySelectorAll(this.settings.target);
-
-      for (const _datePicker of _datePickers) {
-        const inputDatePicker = this.createInput();
-        inputDatePicker.addEventListener('click', (e) => {
-          e.stopPropagation();
-
-          this.handleShowCalendar(_datePicker);
-        });
-        _datePicker.appendChild(inputDatePicker);
-      }
-    }
-  }
-
   class Calendar {
     constructor() {
       this.element = null;
@@ -94,43 +27,50 @@
             shortDayOfWeeks: ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'],
           },
         },
+        onDoubleClickToday: () => {},
+        onDoubleClickDay: () => {},
       };
+      this.now = new Date();
+      this.currentYear = this.now.getFullYear();
+      this.currentMonth = this.now.getMonth() + 1;
     }
 
-    create(datePicker) {
+    create() {
       this.element = document.createElement('div');
       this.element.classList.add('date-picker__calendar');
-      
+
       this.generateHead();
-      this.generateBody();
-
-      const rectDatePicker = datePicker.getBoundingClientRect();
-
-      const rectCalendar = this.element.getBoundingClientRect();
-
-      const spaceBelow = window.innerHeight - rectDatePicker.bottom;
-      const spaceAbove = rectDatePicker.top;
-
-      let top;
-
-      if (spaceBelow >= rectCalendar.height) {
-        // đủ chỗ bên dưới
-        top = rectDatePicker.bottom + window.scrollY - 5;
-      } else if (spaceAbove >= rectCalendar.height) {
-        // đủ chỗ bên trên
-        top = rectDatePicker.top - rectCalendar.height + window.scrollY;
-      } else {
-        // không đủ chỗ cả 2 bên, ưu tiên bên dưới
-        top = rectDatePicker.bottom + window.scrollY - 5;
-      }
-
-      const left = rectDatePicker.left + window.scrollX;
-
-      this.element.style.top = `${top}px`;
-      this.element.style.left = `${left}px`;
-      this.element.style.visibility = 'visible';
+      this.generateTable();
 
       return this;
+    }
+
+    generateTable() {
+      const table = document.createElement('table');
+      const thead = this.generateTableHead();
+      const tbody = this.generateTableBody();
+
+      table.appendChild(thead);
+      table.appendChild(tbody);
+
+      this.element.appendChild(table);
+    }
+
+    generateTableHead() {
+      const thead = document.createElement('thead');
+      const tr = document.createElement('tr');
+      for (const day of this.settings.translation[this.settings.locale].shortDayOfWeeks) {
+        const th = document.createElement('th');
+        const span = document.createElement('span');
+        span.textContent = day;
+        th.appendChild(span);
+        th.style.width = '40px';
+        th.style.height = '40px';
+        tr.appendChild(th);
+      }
+      thead.appendChild(tr);
+
+      return thead;
     }
 
     generateHead() {
@@ -139,15 +79,13 @@
 
       const calendarHeadPrev = document.createElement('button');
       calendarHeadPrev.classList.add('date-picker__calendar__header__prev');
-      calendarHeadPrev.textContent = '<';
 
-      const calendarHeadMonth = document.createElement('span');
+      const calendarHeadMonth = document.createElement('div');
       calendarHeadMonth.classList.add('date-picker__calendar__header__month');
-      calendarHeadMonth.textContent = '2025 - 06';
+      calendarHeadMonth.innerHTML = `<button>${this.currentYear}</button><button>${('0' + this.currentMonth).slice(-2)}</button>`;
 
       const calendarHeadNext = document.createElement('button');
       calendarHeadNext.classList.add('date-picker__calendar__header__next');
-      calendarHeadNext.textContent = '>';
 
       calendarHead.appendChild(calendarHeadPrev);
       calendarHead.appendChild(calendarHeadMonth);
@@ -156,34 +94,105 @@
       this.element.appendChild(calendarHead);
     }
 
-    generateBody() {
-      const calendarBody = document.createElement('div');
-      calendarBody.classList.add('date-picker__calendar__body');
-
-      const table = document.createElement('table');
-      const thead = document.createElement('thead');
+    generateTableBody() {
       const tbody = document.createElement('tbody');
-      const tr = document.createElement('tr');
+      tbody.innerHTML = '';
 
-      this.element.appendChild(calendarBody);
-    }
+      const rows = this.generateNoOfDays();
 
-    getParentNode() {
-      if (this.element) {
-        return this.element.parentNode;
+      for (const row of rows) {
+        tbody.appendChild(row);
       }
 
-      return null;
+      return tbody;
     }
 
-    contains(target) {
-      return this.element.contains(target);
+    generateNoOfDays() {
+      const { blankDays, days } = this.getNoOfDays();
+
+      let noDayOfWeekFilled = 0;
+      let week = 0;
+
+      const rows = [];
+
+      while (days.length) {
+        const tr = document.createElement('tr');
+
+        if (!week) {
+          for (let i = 0; i < blankDays.length; i++) {
+            const td = document.createElement('td');
+            td.classList.add('blank-day');
+            tr.appendChild(td);
+            noDayOfWeekFilled++;
+          }
+        }
+  
+        while (noDayOfWeekFilled < 7) {
+          const td = document.createElement('td');
+          const day = days.shift();
+          td.style.width = '40px';
+          td.style.height = '40px';
+  
+          if (!day) {
+            td.classList.add('blank-day');
+          } else {
+            td.innerHTML = `<span class="day-value${this.isToday(day) ? ' active' : ''}">${day}</span>`;
+          }
+  
+          if (this.isToday(day)) {
+            td.addEventListener('dblclick', e => {
+              this.configs.onDoubleClickToday(e, this);
+            })
+          } else {
+            td.addEventListener('dblclick', e => {
+              this.settings.onDoubleClickDay(e, this, day);
+            })
+          }
+  
+          tr.appendChild(td);
+          noDayOfWeekFilled++;
+        }
+  
+        week++;
+        rows.push(tr);
+  
+        if (noDayOfWeekFilled >= 7) {
+          noDayOfWeekFilled = 0;
+        }
+      }
+
+      return rows;
+    }
+
+    getNoOfDays() {
+      const daysInMonth = new Date(this.currentYear, this.currentMonth, 0).getDate();
+      const dayOfWeek = new Date(this.currentYear, this.currentMonth - 1, 1).getDay();
+      
+      const blankDays = [];
+      for (let i = 1; i <= dayOfWeek; i++) {
+        blankDays.push(i);
+      }
+
+      const days = [];
+      for (let i = 1; i <= daysInMonth; i++) {
+        days.push(i);
+      }
+
+      return {
+        blankDays,
+        days,
+      };
+    }
+
+    isToday(day) {
+      const d = new Date(this.currentYear, this.currentMonth - 1, day);
+      return this.now.toDateString() === d.toDateString();
     }
   }
 
   return {
-    create(settings = {}) {
-      return new DatePicker(settings);
+    createCalendar: () => {
+      return new Calendar();
     }
   };
 });

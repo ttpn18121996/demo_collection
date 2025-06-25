@@ -22,17 +22,12 @@
 }
 
 .date-picker__calendar {
-    position: absolute;
-    visibility: hidden;
     display: block;
-    top: 0;
-    left: 0;
-    transition: visibility 0.3s ease-in-out;
     z-index: 1000;
     background-color: #fff;
     border: 1px solid #373434;
     border-radius: 3px;
-    width: 200px;
+    width: 280px;
     padding: 10px;
 }
 
@@ -43,21 +38,95 @@
     align-items: center;
 }
 
-.date-picker__calendar__body {
-    display: flex;
-    flex-wrap: wrap;
+.date-picker__calendar table {
     width: 100%;
 }
 
-.date-picker__calendar__body__day {
-    width: 14.28%;
-    height: 40px;
+.date-picker__calendar table th > span,
+.date-picker__calendar table td > span {
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    width: 100%;
+    height: 100%;
 }
 
-.date-picker__calendar__body__day:hover {
-    font-weight: bold;
+.date-picker__calendar table td > span:hover {
+    background-color: #252222;
+    color: #fff;
+}
+
+.date-picker__calendar table td > span.active {
+    background-color: #252222;
+    color: #fff;
+}
+
+.date-picker__calendar__header__next,
+.date-picker__calendar__header__prev {
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    border: none;
+    background-color: #252222;
+    color: #fff;
+    position: relative;
+}
+
+.date-picker__calendar__header__next:hover,
+.date-picker__calendar__header__prev:hover {
+    background-color: #373434;
+}
+
+.date-picker__calendar__header__next::before,
+.date-picker__calendar__header__prev::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 10px;
+    height: 10px;
+    border-top: 2px solid #fff;
+    border-right: 2px solid #fff;
+}
+
+.date-picker__calendar__header__next::before {
+    left: 45%;
+    transform: translate(-45%, -50%) rotate(45deg);
+}
+
+.date-picker__calendar__header__prev::before {
+    left: 55%;
+    transform: translate(-55%, -50%) rotate(-135deg);
+}
+
+.date-picker__calendar__header__month {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.date-picker__calendar__header__month button {
+    cursor: pointer;
+    background-color: transparent;
+    color: #252222;
+    height: 32px;
+    width: 54px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #373434;
+    border-radius: 3px;
+    font-size: 18px;
+}
+
+.date-picker__calendar__header__month button:hover {
+    background-color: #e7e7e7;
+}
+
+.date-picker__calendar__header__month * + * {
+    margin-left: .5rem;
 }

@@ -10,6 +10,9 @@
   'use strict';
   let _config = {
     target: '.combobox',
+    withoutInput: false,
+    inputClasses: [],
+    comboboxClasses: [],
     name: null,
     id: null,
     renderBodyHandler: null,
@@ -19,6 +22,7 @@
 
   function createInput(index) {
     const input = document.createElement('input');
+    input.classList.add('combobox__input', ..._config.inputClasses);
     input.type = 'text';
     let inputName;
     let inputId;
@@ -34,9 +38,9 @@
     return input;
   }
 
-  function createCombobox(parent) {
+  function createAndMountCombobox(parent) {
     _combobox = document.createElement('div');
-    _combobox.classList.add('combobox__content');
+    _combobox.classList.add('combobox__content', ..._config.comboboxClasses);
     _config.renderBodyHandler && _config.renderBodyHandler({
       parent,
       combobox: _combobox,
@@ -44,6 +48,8 @@
         handleRemoveCombobox(parent);
       }
     });
+
+    document.body.appendChild(_combobox);
 
     const rectParent = parent.getBoundingClientRect();
     const rectCombobox = _combobox.getBoundingClientRect();
@@ -55,13 +61,13 @@
 
     if (spaceBelow >= rectCombobox.height) {
       // đủ chỗ bên dưới
-      top = rectParent.bottom + window.scrollY;
+      top = rectParent.bottom + window.scrollY + 3;
     } else if (spaceAbove >= rectCombobox.height) {
       // đủ chỗ bên trên
-      top = rectParent.top - rectCombobox.height + window.scrollY;
+      top = rectParent.top - rectCombobox.height + window.scrollY - 3;
     } else {
       // không đủ chỗ cả 2 bên, ưu tiên bên dưới
-      top = rectParent.bottom + window.scrollY;
+      top = rectParent.bottom + window.scrollY + 3;
     }
 
     const left = rectParent.left + window.scrollX;
@@ -78,8 +84,7 @@
       return;
     }
 
-    createCombobox(parent);
-    document.body.appendChild(_combobox);
+    createAndMountCombobox(parent);
 
     setTimeout(() => {
       document.addEventListener('click', (e) => {
@@ -109,8 +114,12 @@
     const comboboxes = document.querySelectorAll(_config.target);
 
     for (let i = 0; i < comboboxes.length; i++) {
-      const input = createInput(i);
-      input.addEventListener('click', e => {
+      if (!_config.withoutInput) {
+        const input = createInput(i);
+        comboboxes[i].appendChild(input);
+      }
+
+      comboboxes[i].addEventListener('click', e => {
         e.stopPropagation();
         if (_config.onClick) {
           _config.onClick(e);
@@ -118,8 +127,6 @@
           handleShowCombobox(comboboxes[i]);
         }
       });
-
-      comboboxes[i].appendChild(input);
     }
 
     return this;

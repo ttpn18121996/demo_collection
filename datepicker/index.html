@@ -13,7 +13,14 @@
     <script src="../combobox/script.js"></script>
     <script src="script.js"></script>
     <script>
-        DatePicker.create().load();
+        Combobox.useBody(({ combobox, parent, close }) => {
+            combobox.appendChild(DatePicker.createCalendar().create().element);
+        }).create({
+            target: '.date-picker',
+            name: 'date_of_birth',
+            id: 'date_of_birth',
+            inputClasses: ['date-picker__input'],
+        });
     </script>
 </body>
 </html>

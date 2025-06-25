@@ -16,6 +16,7 @@
             const input = parent.querySelector('input');
             for (let i = 0; i < 10; i++) {
                 const item = document.createElement('div');
+                item.classList.add('combobox__item');
                 item.innerText = `Item ${i+1}`;
                 item.addEventListener('click', e => {
                     input.value = e.target.innerText;
