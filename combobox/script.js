@@ -17,6 +17,10 @@
     id: null,
     renderBodyHandler: null,
     onClick: null,
+    onInputChange: null,
+    data: [],
+    placeholder: 'Select an option',
+    clearSelection: false,
   };
   let _combobox;
 
@@ -24,6 +28,7 @@
     const input = document.createElement('input');
     input.classList.add('combobox__input', ..._config.inputClasses);
     input.type = 'text';
+    input.placeholder = _config.placeholder;
     let inputName;
     let inputId;
 
@@ -38,16 +43,68 @@
     return input;
   }
 
+  function createSpan(index) {
+    const span = document.createElement('span');
+    span.classList.add('combobox__span', ..._config.inputClasses);
+    span.innerText = _config.placeholder;
+    let spanName;
+    let spanId;
+
+    if (spanName = _config?.name) {
+      span.name = spanName;
+    }
+
+    if (spanId = _config?.id) {
+      span.id = `${spanId}-${index}`;
+    }
+
+    return span;
+  }
+
+  function createItemForData(parent, data) {
+    const item = document.createElement('div');
+    item.innerText = data?.label;
+    item.classList.add('combobox__item');
+
+    if (parent.querySelector('input').value === data?.value) {
+      item.classList.add('combobox__item--selected');
+    }
+
+    item.addEventListener('click', e => {
+      if (_config.onInputChange) {
+        _config.onInputChange(e, {...data, selected: data?.value});
+      }
+      if (_config.withoutInput) {
+        parent.querySelector('span').innerText = data?.label;
+      }
+      parent.querySelector('input').value = data?.value;
+      handleRemoveCombobox(parent);
+    });
+
+    return item;
+  }
+
   function createAndMountCombobox(parent) {
     _combobox = document.createElement('div');
     _combobox.classList.add('combobox__content', ..._config.comboboxClasses);
-    _config.renderBodyHandler && _config.renderBodyHandler({
-      parent,
-      combobox: _combobox,
-      close: () => {
-        handleRemoveCombobox(parent);
+
+    if (_config.renderBodyHandler) {
+      _config.renderBodyHandler({
+        parent,
+        combobox: _combobox,
+        close: () => {
+          handleRemoveCombobox(parent);
+        }
+      });
+    } else if (_config.data?.length) {
+      if (_config.clearSelection) {
+        _combobox.appendChild(createItemForData(parent, { label: _config.placeholder, value: '' }));
       }
-    });
+
+      for (let i = 0; i < _config.data.length; i++) {
+        _combobox.appendChild(createItemForData(parent, _config.data[i]));
+      }
+    }
 
     document.body.appendChild(_combobox);
 
@@ -114,9 +171,29 @@
     const comboboxes = document.querySelectorAll(_config.target);
 
     for (let i = 0; i < comboboxes.length; i++) {
-      if (!_config.withoutInput) {
+      if (_config.withoutInput) {
+        const span = createSpan(i);
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        _config.name && (input.name = _config.name);
+        
+        comboboxes[i].appendChild(span);
+        comboboxes[i].appendChild(input);
+      } else {
         const input = createInput(i);
         comboboxes[i].appendChild(input);
+      }
+
+      // Check and set default value
+      if (_config.data?.length) {
+        for (const item of _config.data) {
+          if (item?.selected) {
+            if (_config.withoutInput) {
+              comboboxes[i].querySelector('span').innerText = item?.label;
+            }
+            comboboxes[i].querySelector('input').value = item?.value;
+          }
+        }
       }
 
       comboboxes[i].addEventListener('click', e => {
@@ -129,6 +206,12 @@
       });
     }
 
+    return this;
+  }
+
+  function setData(data, onInputChange = null) {
+    _config.data = data;
+    _config.onInputChange = onInputChange;
     return this;
   }
 
@@ -146,5 +229,6 @@
     create,
     useBody,
     useClickEvent,
+    setData,
   };
 });

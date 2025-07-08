@@ -8,23 +8,32 @@
 </head>
 <body>
     <div class="container">
-        <div class="combobox"></div>
+        <form action="">
+            <div class="combobox"></div>
+            <button type="submit">Submit</button>
+        </form>
     </div>
     <script src="./script.js"></script>
     <script>
-        Combobox.useBody(({combobox, parent, close}) => {
-            const input = parent.querySelector('input');
-            for (let i = 0; i < 10; i++) {
-                const item = document.createElement('div');
-                item.classList.add('combobox__item');
-                item.innerText = `Item ${i+1}`;
-                item.addEventListener('click', e => {
-                    input.value = e.target.innerText;
-                    close();
-                });
-                combobox.appendChild(item);
-            }
-        }).create();
+        Combobox.setData([
+                {
+                    label: 'Item 1',
+                    value: 'item-1'
+                },
+                {
+                    label: 'Item 2',
+                    value: 'item-2',
+                },
+                {
+                    label: 'Item 3',
+                    value: 'item-3'
+                }
+            ]).create({
+            target: '.combobox',
+            withoutInput: true,
+            clearSelection: true,
+            name: 'test',
+        });
     </script>
 </body>
 </html>

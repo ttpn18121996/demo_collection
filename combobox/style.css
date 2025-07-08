@@ -12,11 +12,21 @@
     height: 100vh;
 }
 
-.combobox__input {
+.combobox__input, .combobox__span {
     width: 100%;
     padding: 10px;
     border: 1px solid #373434;
     border-radius: 3px;
+}
+
+.combobox__span {
+    display: block;
+    cursor: pointer;
+}
+
+.combobox__item--selected {
+    background-color: #bdb8b8;
+    color: #fff;
 }
 
 .combobox__content {
