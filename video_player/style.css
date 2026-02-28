@@ -1,0 +1,122 @@
+*, *::before, *::after {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.video-player__wrapper {
+    position: relative;
+    width: 800px;
+    height: 480px;
+}
+
+.video-player__canvas {
+    width: 100%;
+    height: 100%;
+}
+
+.video-player__controls {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    display: block;
+    width: 100%;
+    height: 40px;
+    background: rgba(0, 0, 0, .25);
+}
+
+.video-player__controls.hidden {
+    display: none;
+}
+
+.video-player__progressbar {
+    height: 4px;
+    background: #e1e1e1;
+    width: 100%;
+}
+
+.video-player__controlbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.video-player__controlbar-items {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.video-player__control-play {
+    --size:  48px;
+    --bg: #fff;
+    position: relative;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+}
+
+.video-player__control-play::before {
+    content: "";
+    display: block;
+    width: 0;
+    height: 0;
+    border-top: calc(var(--size) * 0.18) solid transparent;
+    border-bottom: calc(var(--size) * 0.18) solid transparent;
+    border-left: calc(var(--size) * 0.28) solid var(--bg);
+    margin-left: 6%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.video-player__control-play.paused::before {
+    width: 18px;
+    height: 18px;
+    border-top: none;
+    border-bottom: none;
+    border-left: 7px solid var(--bg);
+    border-right: 7px solid var(--bg);
+}
+
+.video-player__control-rewind {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.video-player__control-prev,
+.video-player__control-next {
+    position: relative;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+}
+
+.video-player__control-prev::before,
+.video-player__control-next::before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.video-player__control-prev::before {
+    content: "<<";
+}
+
+.video-player__control-next::before {
+    content: ">>";
+}
+
+.video-player__controlbar-items * + *,
+.video-player__control-rewind * + * {
+    margin-left: 4px;
+}
+
+.video-player__video {
+    display: none;
+}

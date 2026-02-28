@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Video player</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div id="player">
+        <div class="video-player__wrapper">
+            <canvas class="video-player__canvas"></canvas>
+            <video class="video-player__video" src="./video-test.mp4"></video>
+            <div class="video-player__controls">
+                <div class="video-player__progressbar"></div>
+                <div class="video-player__controlbar">
+                    <div class="video-player__controlbar-items">
+                        <div class="video-player__control-play"></div>
+                        <div class="video-player__control-rewind">
+                            <div class="video-player__control-prev"></div>
+                            <div class="video-player__control-next"></div>
+                        </div>
+                        <div class="video-player__control-time">0:00 / 38:53</div>
+                    </div>
+                    <div class="video-player__controlbar-items"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="./script.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+        // const player = new VideoPlayer({
+        //     target: '#player',
+        //     src: './video-test.mp4',
+        // });
+        // player.mount();
+    </script>
+</body>
+</html>
