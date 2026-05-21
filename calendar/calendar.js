@@ -40,6 +40,7 @@
         year: 0,
         month: 0,
     },
+    holidays: [],
   };
   _this.now = new Date();
 
@@ -83,7 +84,7 @@
 
     for (const day of _this.getTranslations(_this.configs.displayShortDayOfWeek ? 'shortDayOfWeeks' : 'dayOfWeeks')) {
       const headingCell = document.createElement('div');
-      headingCell.classList.add('calendar__day-of-week');
+      headingCell.classList.add('calendar__day');
       headingCell.textContent = day;
       heading.appendChild(headingCell);
     }
@@ -104,31 +105,37 @@
       const bodyRow = document.createElement('div');
       bodyRow.classList.add('calendar__row');
 
+      let lastDayPrevMonth = new Date(_this.current.year, _this.current.month - 1, 0).getDate();
       if (!week) {
         for (let i = 0; i < blankDays.length; i++) {
           const bodyCell = document.createElement('div');
-          bodyCell.classList.add('calendar__date', 'blank-day');
+          bodyCell.classList.add('calendar__day', 'blank-day');
+          bodyCell.innerHTML = `<p class="day-value"><span>${lastDayPrevMonth - blankDays.length + i + 1}</span></p>`;
           bodyRow.appendChild(bodyCell);
           noDayOfWeekFilled++;
         }
       }
 
+      let dayNextMonth = 1;
       while (noDayOfWeekFilled < 7) {
         const bodyCell = document.createElement('div');
-        bodyCell.classList.add('calendar__date');
+        bodyCell.classList.add('calendar__day');
         const day = days.shift();
 
         if (!day) {
           bodyCell.classList.add('blank-day');
+          bodyCell.innerHTML = `<p class="day-value"><span>${dayNextMonth}</span></p>`;
+          dayNextMonth++;
         } else {
           bodyCell.innerHTML = `<p class="day-value${_this.isToday(day) ? ' active' : ''}"><span>${day}</span></p>`;
+          bodyCell.innerHTML += `<p class="day-note"><span>Sinh nhật</span><span>Ăn chay</span><span>Tái khám</span></p>`;
         }
 
         if (_this.isToday(day) && _this.configs.onDoubleClickToday) {
           bodyCell.addEventListener('dblclick', e => {
             _this.configs.onDoubleClickToday(e, _this);
           });
-        } else if (_this.configs.onDoubleClickDay) {
+        } else if (day && _this.configs.onDoubleClickDay) {
           bodyCell.addEventListener('dblclick', e => {
             _this.configs.onDoubleClickDay(e, _this, day);
           });
