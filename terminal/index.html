@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terminal</title>
+    <link rel="stylesheet" type="text/css" href="./vendor/terminal.css">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+    <script src="./vendor/terminal.js"></script>
+    <script>
+        Terminal.configure({
+            targetId: '#app',
+            username: 'admin',
+            helpers: [
+                {
+                  _title: 'person commands',
+                  'person:list': 'List all persons',
+                  'person:detail &lt;id&gt;': 'Show person details',
+                },
+                {
+                  _title: 'general',
+                  'help': 'Show this help message',
+                  'clear|cls': 'Clear the terminal screen',
+                  'refresh': 'Reload the terminal page',
+                  'exit|quit': 'Exit the terminal session',
+                },
+            ],
+            executor(command) {
+                Terminal.printTable(
+                    ['ID', 'Name', 'Email', 'Created at', 'Updated at'],
+                    [
+                        [1, 'Trịnh Trần Phương Nam', 'ttpn@example.com', '2026-05-27 00:13:00', '2026-05-27 00:13:00'],
+                        [2, 'Tằng Minh Nguyệt', 'tmn@example.com', '2026-05-27 00:13:00', '2026-05-27 00:13:00'],
+                        [3, 'Trịnh Việt Phương', 'tvp@example.com', '2026-05-27 00:13:00', '2026-05-27 00:13:00'],
+                        [4, 'Trịnh Phương Diễm', 'tpd@example.com', '2026-05-27 00:13:00', '2026-05-27 00:13:00'],
+                        [5, 'Trần Thị Huê', 'tth@example.com', '2026-05-27 00:13:00', '2026-05-27 00:13:00'],
+                    ]
+                );
+            },
+        }).run();
+    </script>
+</body>
+</html>
